@@ -5,6 +5,13 @@ const { data } = await useFetch("/api/randos", {
 
 const rando = data.value?.randos.find((r) => r.id === useRoute().params.randoId);
 
+if (!rando) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: "Page Non Trouvée",
+  });
+}
+
 useSeoMeta({
   title: `${rando?.title} - Randos`,
   ogTitle: `${rando?.title} - Randos`,
