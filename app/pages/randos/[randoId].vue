@@ -52,7 +52,7 @@ const mapsIframeSrc = computed(() => {
     <u-container>
       <h1 class="title text-6xl font-bold">{{ rando?.title }}</h1>
       <div class="mt-2">
-        <RandoTimeRange :date-start="rando?.dateStart" :date-end="rando?.dateEnd" />
+        <RandoTimeRange class="time" :date-start="rando?.dateStart" :date-end="rando?.dateEnd" />
       </div>
       <div class="mt-8 grid grid-cols-12 gap-4">
         <nuxt-img :src="rando?.cover" class="rando-img col-span-8 rounded-2xl" />
@@ -141,6 +141,9 @@ const mapsIframeSrc = computed(() => {
 <style scoped>
 .title {
   view-transition-name: title;
+}
+.time {
+  view-transition-name: time;
 }
 .rando-img {
   view-transition-name: selected-rando;

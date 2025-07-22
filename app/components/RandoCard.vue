@@ -17,6 +17,9 @@ const active = useState();
 <template>
   <article
     class="group/blog-post hover:bg-elevated/50 relative flex flex-col overflow-hidden rounded-lg transition"
+    :class="{
+      'active-article': active === rando.id,
+    }"
     @click="active = rando.id"
   >
     <div
@@ -24,10 +27,7 @@ const active = useState();
     >
       <nuxt-img
         :alt="rando.title"
-        class="h-full w-full transform object-cover object-top transition-transform duration-200 group-hover/blog-post:scale-110"
-        :class="{
-          active: active === rando.id,
-        }"
+        class="h-full w-full transform bg-neutral-50 object-cover object-top transition-transform duration-200 group-hover/blog-post:scale-110"
         :src="rando.cover"
       />
     </div>
@@ -52,22 +52,20 @@ const active = useState();
               })
         }}
       </time>
-      <h2
-        class="text-highlighted text-xl font-semibold text-pretty"
-        :class="{
-          active: active === rando.id,
-        }"
-      >
+      <h2 class="text-highlighted text-xl font-semibold text-pretty">
         {{ rando.title }}
       </h2>
     </div>
   </article>
 </template>
-<style>
-h2.active {
+<style scope>
+.active-article h2 {
   view-transition-name: title;
 }
-img.active {
+.active-article time {
+  view-transition-name: time;
+}
+.active-article img {
   view-transition-name: selected-rando;
   contain: layout;
 }
