@@ -5,6 +5,15 @@ const { data } = await useFetch("/api/randos", {
 
 const rando = data.value?.randos.find((r) => r.id === useRoute().params.randoId);
 
+useSeoMeta({
+  title: `${rando?.title} - Randos`,
+  ogTitle: `${rando?.title} - Randos`,
+  // description: rando?.description || "Découvrez cette randonnée unique",
+  // ogDescription: rando?.description || "Découvrez cette randonnée unique",
+  description: "Découvrez cette randonnée unique",
+  ogDescription: "Découvrez cette randonnée unique",
+});
+
 // Format a float duration (3.35) into a human readble format "3h 21min"
 const formattedDuration = computed(() => {
   if (!rando?.duree) return "";
