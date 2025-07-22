@@ -7,6 +7,11 @@ const items = computed<NavigationMenuItem[]>(() => [
     to: "/",
     icon: "i-heroicons-home",
   },
+  {
+    label: "À propos",
+    to: "/a-propos",
+    icon: "i-heroicons-information-circle",
+  },
 ]);
 </script>
 
