@@ -21,8 +21,9 @@ useSeoMeta({
   ogDescription: "Découvrez cette randonnée unique",
 });
 
+// TODO: remove the Notion of Cover and only use photos
 const SEE_MORE_PHOTO = "SEE_MORE_PHOTO";
-const photos = computed(() => [...(rando?.photos || []), SEE_MORE_PHOTO]);
+const photos = computed(() => [...(rando?.photos || []), ...(rando?.photosLink ? [SEE_MORE_PHOTO] : [])]);
 const allPhotos = computed(() => [rando?.cover, ...(rando?.photos || [])].filter(Boolean));
 
 const mapsIframeSrc = computed(() => {
@@ -77,7 +78,7 @@ const activeShowMore = ref("");
               animation: 'blur',
             }"
             :src="rando?.cover"
-            class="rando-img w-full rounded-2xl"
+            class="rando-img max-h-[32.5rem] w-full rounded-2xl object-cover"
           />
           <div>
             <UCarousel
@@ -197,10 +198,11 @@ const activeShowMore = ref("");
             <div class="flex w-fit flex-col gap-4">
               <div>
                 <u-button
-                  color="primary"
+                  :color="rando?.photosLink ? 'primary' : 'neutral'"
                   variant="soft"
                   block
                   :to="rando?.photosLink"
+                  :disabled="!rando?.photosLink"
                   target="_blank"
                   icon="i-lucide-camera"
                   class="justify-start"
