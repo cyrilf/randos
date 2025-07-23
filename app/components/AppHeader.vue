@@ -5,12 +5,12 @@ const items = computed<NavigationMenuItem[]>(() => [
   {
     label: "Accueil",
     to: "/",
-    icon: "i-heroicons-home",
+    icon: "i-lucide-home",
   },
   {
     label: "À propos",
     to: "/a-propos",
-    icon: "i-heroicons-information-circle",
+    icon: "i-lucide-info",
   },
 ]);
 </script>
@@ -23,17 +23,6 @@ const items = computed<NavigationMenuItem[]>(() => [
 
     <template #right>
       <UColorModeButton />
-
-      <!-- <UTooltip text="Open on GitHub" :kbds="['meta', 'G']">
-        <UButton
-          color="neutral"
-          variant="ghost"
-          to="https://github.com/nuxt/ui"
-          target="_blank"
-          icon="i-simple-icons-github"
-          aria-label="GitHub"
-        />
-      </UTooltip> -->
     </template>
   </UHeader>
 </template>

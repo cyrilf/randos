@@ -21,14 +21,6 @@ useSeoMeta({
   ogDescription: "Découvrez cette randonnée unique",
 });
 
-// Format a float duration (3.35) into a human readble format "3h 21min"
-const formattedDuration = computed(() => {
-  if (!rando?.duree) return "";
-  const hours = Math.floor(rando.duree);
-  const minutes = Math.round((rando.duree - hours) * 60);
-  return `${hours}h${minutes > 0 ? ` ${minutes}min` : ""}`;
-});
-
 const mapsIframeSrc = computed(() => {
   if (!rando?.maps) return "";
 
@@ -52,6 +44,8 @@ const mapsIframeSrc = computed(() => {
 
   return `https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d187547.6331733288!2d${longitude}!3d${latitude}!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s${placeId}!2sEtang%20De%20Fontargentes!5e0!3m2!1sen!2sfr!4v1753205700748!5m2!1sen!2sfr`;
 });
+
+const activeShowMore = ref("");
 </script>
 
 <template>
@@ -68,22 +62,75 @@ const mapsIframeSrc = computed(() => {
         >
           <UCard variant="subtle" class="rounded-2xl">
             <h2 class="mb-4 text-2xl font-semibold">Informations</h2>
-            <p>
-              <strong>Type :</strong>
-              <u-badge :label="rando?.type" class="ml-1" variant="subtle" color="neutral" />
-            </p>
-            <p><strong>Durée :</strong> {{ formattedDuration }}</p>
-            <p><strong>Distance :</strong> {{ rando?.distance }} km</p>
-            <p><strong>Dénivelé :</strong> {{ rando?.denivele }} m</p>
-            <p>
-              <strong>Difficulté :</strong>
-              <u-badge
-                :label="rando?.difficulte"
-                variant="subtle"
-                :color="getDifficultyColor(rando?.difficulte)"
-                class="ml-1"
-              />
-            </p>
+            <div class="flex flex-col gap-1">
+              <p class="flex items-center gap-1">
+                <span class="inline-flex items-center gap-1"
+                  ><UIcon name="i-lucide-clipboard-type" /><strong>Type :</strong></span
+                >
+                <u-badge :label="rando?.type" variant="subtle" color="neutral" />
+              </p>
+              <p class="flex items-center gap-1">
+                <span class="inline-flex items-center gap-1"
+                  ><UIcon name="i-lucide-flag" /><strong> Difficulté :</strong></span
+                >
+                <u-badge :label="rando?.difficulty" variant="subtle" :color="getDifficultyColor(rando?.difficulty)" />
+              </p>
+              <p class="flex items-center gap-1">
+                <span class="inline-flex items-center gap-1"
+                  ><UIcon name="i-lucide-map" /><strong>Distance :</strong></span
+                >
+                {{ rando?.distance }}
+              </p>
+              <p class="flex items-center gap-1">
+                <span class="inline-flex items-center gap-1"
+                  ><UIcon name="i-lucide-clock" /><strong> Durée moyenne :</strong></span
+                >
+                {{ rando?.duration }}
+              </p>
+              <p class="flex items-center gap-1">
+                <span class="inline-flex items-center gap-1"
+                  ><UIcon name="i-lucide-trending-up" /><strong>Dénivelé positif :</strong></span
+                >
+                {{ rando?.elevationUp }}
+              </p>
+            </div>
+            <UAccordion
+              v-model="activeShowMore"
+              :items="[{ label: activeShowMore === '0' ? 'Voir moins' : 'Voir plus' }]"
+              :ui="{
+                trailingIcon: 'ms-0',
+                body: 'text-base',
+              }"
+            >
+              <template #body>
+                <div class="flex flex-col gap-1">
+                  <p class="flex items-center gap-1">
+                    <span class="inline-flex items-center gap-1"
+                      ><UIcon name="i-lucide-trending-down" /><strong>Dénivelé négatif :</strong></span
+                    >
+                    {{ rando?.elevationDown }}
+                  </p>
+                  <p class="flex items-center gap-1">
+                    <span class="inline-flex items-center gap-1"
+                      ><UIcon name="i-lucide-chevrons-up" /><strong>Point haut :</strong></span
+                    >
+                    {{ rando?.highPoint }}
+                  </p>
+                  <p class="flex items-center gap-1">
+                    <span class="inline-flex items-center gap-1"
+                      ><UIcon name="i-lucide-chevrons-down" /><strong>Point bas :</strong></span
+                    >
+                    {{ rando?.lowPoint }}
+                  </p>
+                  <p class="flex flex-wrap items-center gap-1">
+                    <span class="inline-flex items-center gap-1"
+                      ><UIcon name="i-lucide-map-pin" /><strong>Départ / Arrivée :</strong></span
+                    >
+                    {{ rando?.coordinates }}
+                  </p>
+                </div>
+              </template>
+            </UAccordion>
           </UCard>
           <UCard variant="subtle" class="rounded-2xl">
             <h2 class="mb-4 text-2xl font-semibold">Actions</h2>
@@ -95,7 +142,7 @@ const mapsIframeSrc = computed(() => {
                   block
                   :to="rando?.photos"
                   target="_blank"
-                  icon="i-heroicons-photo"
+                  icon="i-lucide-camera"
                   class="justify-start"
                 >
                   <span class="ml-2">Ouvrir Google Photos</span>
@@ -108,7 +155,7 @@ const mapsIframeSrc = computed(() => {
                   block
                   :to="rando?.maps"
                   target="_blank"
-                  icon="i-heroicons-map"
+                  icon="i-lucide-map"
                   class="justify-start"
                 >
                   <span class="ml-2">Ouvrir Google Maps</span>
@@ -119,9 +166,9 @@ const mapsIframeSrc = computed(() => {
                   color="primary"
                   variant="soft"
                   block
-                  :to="rando?.details"
+                  :to="rando?.visorando"
                   target="_blank"
-                  icon="i-heroicons-document-text"
+                  icon="i-lucide-file-text"
                   class="justify-start"
                 >
                   <span class="ml-2">Ouvrir Viso Rando</span>
