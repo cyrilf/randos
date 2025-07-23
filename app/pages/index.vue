@@ -3,6 +3,8 @@ const { data } = await useFetch("/api/randos", {
   key: "randos",
 });
 const randos = data.value?.randos || [];
+
+const { myMapsEmbed } = useRuntimeConfig().public;
 </script>
 <template>
   <UContainer class="my-16">
@@ -32,11 +34,24 @@ const randos = data.value?.randos || [];
           />
         </svg>
       </span>
-      pour le moment,
-      <div class="absolute inline-block">&nbsp;cool!</div>
+      pour le moment, cool!
     </h1>
-    <UBlogPosts class="mt-16">
+    <div class="mt-16 flex flex-col gap-8 sm:grid sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-16">
       <RandoCard v-for="rando in randos" :key="rando.id" :rando />
-    </UBlogPosts>
+    </div>
+    <UCard v-if="myMapsEmbed" variant="subtle" class="mt-16 rounded-2xl pb-0">
+      <div class="relative min-h-48 overflow-hidden rounded-2xl">
+        <iframe
+          :src="myMapsEmbed"
+          width="100%"
+          height="240"
+          class="absolute -top-12 mx-auto rounded-2xl"
+          style="border: 0"
+          allowFullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        />
+      </div>
+    </UCard>
   </UContainer>
 </template>

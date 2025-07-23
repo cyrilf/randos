@@ -61,9 +61,11 @@ const mapsIframeSrc = computed(() => {
       <div class="mt-2">
         <RandoTimeRange class="time" :date-start="rando?.dateStart" :date-end="rando?.dateEnd" />
       </div>
-      <div class="mt-8 grid grid-cols-12 gap-4">
-        <nuxt-img :src="rando?.cover" class="rando-img col-span-8 rounded-2xl" />
-        <div class="col-span-4 flex flex-col gap-4">
+      <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <nuxt-img :src="rando?.cover" class="rando-img w-full rounded-2xl sm:col-span-2" />
+        <div
+          class="grid grid-cols-1 gap-4 sm:col-span-2 sm:row-start-1 sm:grid-cols-2 md:grid-cols-3 lg:col-span-1 lg:col-start-3 lg:grid-cols-1"
+        >
           <UCard variant="subtle" class="rounded-2xl">
             <h2 class="mb-4 text-2xl font-semibold">Informations</h2>
             <p>
@@ -132,7 +134,7 @@ const mapsIframeSrc = computed(() => {
               :src="mapsIframeSrc"
               width="350"
               height="300"
-              class="rounded-2xl"
+              class="mx-auto rounded-2xl"
               style="border: 0"
               allowFullscreen=""
               loading="lazy"

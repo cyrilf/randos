@@ -11,6 +11,10 @@ export default defineNuxtConfig({
   runtimeConfig: {
     notionApiKey: "", // can be overridden by NUXT_NOTION_API_KEY environment variable
     notionDatabaseId: "", // can be overridden by NUXT_NOTION_DATABASE_ID environment variable
+    appBaseUrl: "", // can be overridden by NUXT_APP_BASE_URL environment variable
+    public: {
+      myMapsEmbed: "", // can be overridden by NUXT_PUBLIC_MY_MAPS_EMBED environment variable,
+    },
   },
   css: ["~/assets/css/main.css"],
   experimental: {

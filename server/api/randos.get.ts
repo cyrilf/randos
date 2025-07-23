@@ -67,9 +67,9 @@ export default defineEventHandler(async (event) => {
           // @ts-expect-error todo:check how to handle types correctly from Notion
           denivele: p.Dénivelé.number || undefined,
           // @ts-expect-error todo:check how to handle types correctly from Notion
-          maps: p["Google Maps"].url || undefined,
+          maps: p.Maps.url || undefined,
           // @ts-expect-error todo:check how to handle types correctly from Notion
-          photos: p["Google Photos"].url || undefined,
+          photos: p.Photos.url || undefined,
           // @ts-expect-error todo:check how to handle types correctly from Notion
           details: p["Viso rando"].url || undefined,
         };
