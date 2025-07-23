@@ -58,7 +58,7 @@ const activeShowMore = ref("");
       <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <nuxt-img :src="rando?.cover" class="rando-img w-full rounded-2xl sm:col-span-2" />
         <div
-          class="grid grid-cols-1 gap-4 sm:col-span-2 sm:row-start-1 sm:grid-cols-2 md:grid-cols-3 lg:col-span-1 lg:col-start-3 lg:grid-cols-1"
+          class="grid grid-cols-1 gap-4 sm:col-span-2 sm:row-start-1 sm:grid-cols-2 md:grid-cols-3 lg:col-span-1 lg:col-start-3 lg:row-span-3 lg:grid-cols-1"
         >
           <UCard variant="subtle" class="rounded-2xl">
             <h2 class="mb-4 text-2xl font-semibold">Informations</h2>
@@ -187,6 +187,12 @@ const activeShowMore = ref("");
               loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"
             />
+          </UCard>
+        </div>
+        <div class="sm:col-span-2">
+          <UCard v-if="rando.description" variant="subtle" class="rounded-2xl">
+            <!--eslint-disable vue/no-v-html-->
+            <div v-html="rando.description?.replace(/>\s+</g, '><')" />
           </UCard>
         </div>
       </div>
