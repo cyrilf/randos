@@ -16,7 +16,7 @@ export default defineNuxtConfig({
       myMapsEmbed: "", // can be overridden by NUXT_PUBLIC_MY_MAPS_EMBED environment variable,
     },
   },
-  css: ["~/assets/css/main.css"],
+  css: ["~/assets/css/main.css", "vue-3-fullscreen-image-directive-plugin/style.css"],
   experimental: {
     viewTransition: true,
   },

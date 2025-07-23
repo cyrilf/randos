@@ -23,6 +23,7 @@ useSeoMeta({
 
 const SEE_MORE_PHOTO = "SEE_MORE_PHOTO";
 const photos = computed(() => [...(rando?.photos || []), SEE_MORE_PHOTO]);
+const allPhotos = computed(() => [rando?.cover, ...(rando?.photos || [])].filter(Boolean));
 
 const mapsIframeSrc = computed(() => {
   if (!rando?.mapsLink) return "";
@@ -68,7 +69,16 @@ const activeShowMore = ref("");
       </div>
       <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <div class="sm:col-span-2">
-          <nuxt-img :src="rando?.cover" class="rando-img w-full rounded-2xl" />
+          <nuxt-img
+            v-if="rando?.cover"
+            v-fullscreen-image="{
+              imageUrl: allPhotos,
+              withDownload: false,
+              animation: 'blur',
+            }"
+            :src="rando?.cover"
+            class="rando-img w-full rounded-2xl"
+          />
           <div>
             <UCarousel
               v-slot="{ item }"
@@ -80,6 +90,11 @@ const activeShowMore = ref("");
             >
               <NuxtImg
                 v-if="item !== SEE_MORE_PHOTO"
+                v-fullscreen-image="{
+                  imageUrl: allPhotos.toSorted((a, b) => (a === item ? -1 : b === item ? 1 : 0)),
+                  withDownload: false,
+                  animation: 'blur',
+                }"
                 :src="item"
                 width="320"
                 height="320"
