@@ -8,9 +8,10 @@ type Rando = {
   dateStart: string | undefined;
   dateEnd: string | undefined;
   type: string | undefined;
-  maps: string | undefined;
-  photos: string | undefined;
-  visorando: string | undefined;
+  mapsLink: string | undefined;
+  photosLink: string | undefined;
+  visorandoLink: string | undefined;
+  photos: string[] | undefined;
   // Viso Rando properties
   description?: string;
   distance?: string;
@@ -56,11 +57,11 @@ export default defineEventHandler(async (event) => {
           const p = page.properties;
 
           // @ts-expect-error todo:check how to handle types correctly from Notion
-          const visoRandoUrl = p["Viso rando"].url || undefined;
+          const visoRandoLink = p["VisoRandoLink"].url || undefined;
           let randoData = null;
 
-          if (visoRandoUrl) {
-            randoData = await $fetch(`/api/rando?url=${visoRandoUrl}`);
+          if (visoRandoLink) {
+            randoData = await $fetch(`/api/rando?url=${visoRandoLink}`);
           }
 
           return {
@@ -76,10 +77,12 @@ export default defineEventHandler(async (event) => {
             // @ts-expect-error todo:check how to handle types correctly from Notion
             type: p.Type.select?.name || undefined,
             // @ts-expect-error todo:check how to handle types correctly from Notion
-            maps: p.Maps.url || undefined,
+            photos: p.Photos.files.map((f) => f?.file?.url) || undefined,
             // @ts-expect-error todo:check how to handle types correctly from Notion
-            photos: p.Photos.url || undefined,
-            visorando: visoRandoUrl,
+            mapsLink: p.MapsLink.url || undefined,
+            // @ts-expect-error todo:check how to handle types correctly from Notion
+            photosLink: p.PhotosLink.url || undefined,
+            visorandoLink: visoRandoLink,
           };
         }),
     );

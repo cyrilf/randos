@@ -21,17 +21,20 @@ useSeoMeta({
   ogDescription: "Découvrez cette randonnée unique",
 });
 
-const mapsIframeSrc = computed(() => {
-  if (!rando?.maps) return "";
+const SEE_MORE_PHOTO = "SEE_MORE_PHOTO";
+const photos = computed(() => [...(rando?.photos || []), SEE_MORE_PHOTO]);
 
-  const coordMatch = rando?.maps.match(/@([^,]+),([^,]+)/);
+const mapsIframeSrc = computed(() => {
+  if (!rando?.mapsLink) return "";
+
+  const coordMatch = rando?.mapsLink.match(/@([^,]+),([^,]+)/);
   if (!coordMatch) {
     console.error("Coordinates not found in the URL.");
   }
   const latitude = coordMatch?.[1];
   const longitude = coordMatch?.[2];
 
-  const placeIdMatch = rando?.maps.match(/!1s([^!]+)/);
+  const placeIdMatch = rando?.mapsLink.match(/!1s([^!]+)/);
   if (!placeIdMatch) {
     console.error("Place ID not found in the URL.");
   }
@@ -51,12 +54,54 @@ const activeShowMore = ref("");
 <template>
   <div class="my-16">
     <u-container>
+      <u-button
+        color="primary"
+        variant="ghost"
+        icon="i-lucide-arrow-left"
+        to="/"
+        label="Retour à la liste des randos"
+        class="inline-flex items-center"
+      />
       <h1 class="title text-6xl font-bold">{{ rando?.title }}</h1>
       <div class="mt-2">
         <RandoTimeRange class="time" :date-start="rando?.dateStart" :date-end="rando?.dateEnd" />
       </div>
       <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <nuxt-img :src="rando?.cover" class="rando-img w-full rounded-2xl sm:col-span-2" />
+        <div class="sm:col-span-2">
+          <nuxt-img :src="rando?.cover" class="rando-img w-full rounded-2xl" />
+          <div>
+            <UCarousel
+              v-slot="{ item }"
+              :items="photos"
+              wheel-gestures
+              loop
+              :ui="{ item: 'basis-1/3', container: 'items-stretch' }"
+              class="mt-4"
+            >
+              <NuxtImg
+                v-if="item !== SEE_MORE_PHOTO"
+                :src="item"
+                width="320"
+                height="320"
+                class="h-full w-full rounded-lg object-cover"
+              />
+              <div v-else class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-100">
+                <u-button
+                  color="primary"
+                  variant="ghost"
+                  block
+                  :to="rando?.photosLink"
+                  target="_blank"
+                  icon="i-lucide-camera"
+                  class="h-full min-h-48 w-full flex-col"
+                  :ui="{ leadingIcon: 'size-8' }"
+                >
+                  <span class="ml-2">Voir toutes les photos</span>
+                </u-button>
+              </div>
+            </UCarousel>
+          </div>
+        </div>
         <div
           class="grid grid-cols-1 gap-4 sm:col-span-2 sm:row-start-1 sm:grid-cols-2 md:grid-cols-3 lg:col-span-1 lg:col-start-3 lg:row-span-3 lg:grid-cols-1"
         >
@@ -140,7 +185,7 @@ const activeShowMore = ref("");
                   color="primary"
                   variant="soft"
                   block
-                  :to="rando?.photos"
+                  :to="rando?.photosLink"
                   target="_blank"
                   icon="i-lucide-camera"
                   class="justify-start"
@@ -153,7 +198,7 @@ const activeShowMore = ref("");
                   color="primary"
                   variant="soft"
                   block
-                  :to="rando?.maps"
+                  :to="rando?.mapsLink"
                   target="_blank"
                   icon="i-lucide-map"
                   class="justify-start"
@@ -166,7 +211,7 @@ const activeShowMore = ref("");
                   color="primary"
                   variant="soft"
                   block
-                  :to="rando?.visorando"
+                  :to="rando?.visorandoLink"
                   target="_blank"
                   icon="i-lucide-file-text"
                   class="justify-start"
