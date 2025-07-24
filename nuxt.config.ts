@@ -22,6 +22,13 @@ export default defineNuxtConfig({
     appManifest: false,
   },
 
+  icon: {
+    provider: "none",
+    clientBundle: {
+      scan: true,
+    },
+  },
+
   ssr: true,
   nitro: {
     prerender: {
