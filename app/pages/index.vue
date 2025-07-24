@@ -40,12 +40,14 @@ const { myMapsEmbed } = useRuntimeConfig().public;
       <RandoCard v-for="rando in randos" :key="rando.id" :rando />
     </div>
     <UCard v-if="myMapsEmbed" variant="subtle" class="mt-16 rounded-2xl pb-0">
-      <div class="relative min-h-48 overflow-hidden rounded-2xl">
+      <h2 class="text-2xl font-bold">Où sont les randos ?</h2>
+      <div class="relative mt-4 min-h-60 overflow-hidden rounded-2xl">
+        <!-- TODO use a custom map using MapLibre for instance based on the visorando coordinates-->
         <iframe
           :src="myMapsEmbed"
           width="100%"
-          height="240"
-          class="absolute -top-12 mx-auto rounded-2xl"
+          height="300"
+          class="absolute -top-16 mx-auto rounded-2xl"
           style="border: 0"
           allowFullscreen=""
           loading="lazy"
