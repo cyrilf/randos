@@ -19,7 +19,14 @@ export default defineNuxtConfig({
   css: ["~/assets/css/main.css", "vue-3-fullscreen-image-directive-plugin/style.css"],
   experimental: {
     viewTransition: true,
+    appManifest: false,
   },
 
   ssr: true,
+  nitro: {
+    prerender: {
+      crawlLinks: true,
+      failOnError: false,
+    },
+  },
 });
