@@ -1,4 +1,5 @@
 import { Client, isFullPage } from "@notionhq/client";
+import { downloadImage } from "./utils/imageDownloader";
 
 type Rando = {
   // Notion properties
@@ -47,27 +48,29 @@ export default defineEventHandler(async (event) => {
       response.results
         .filter((page) => isFullPage(page))
         .map(async (page) => {
+          const p = page.properties;
+
           let cover = undefined;
           if (page.cover?.type === "file") {
             cover = page.cover?.file?.url;
           } else if (page.cover?.type === "external") {
             cover = page.cover?.external?.url;
           }
+          // @ts-expect-error todo:check how to handle types correctly from Notion
+          const photos = (p.Photos?.files || []).map((f) => f?.file?.url).filter(Boolean);
 
-          const p = page.properties;
+          const localCover = cover ? await downloadImage(cover) : undefined;
+          const localPhotos = await Promise.all(photos.map((url: string) => downloadImage(url)));
 
           // @ts-expect-error todo:check how to handle types correctly from Notion
           const visoRandoLink = p["VisoRandoLink"].url || undefined;
-          let randoData = null;
-
-          if (visoRandoLink) {
-            randoData = await $fetch(`/api/rando?url=${visoRandoLink}`);
-          }
+          const randoData = visoRandoLink ? await $fetch(`/api/rando?url=${visoRandoLink}`) : null;
 
           return {
             id: page.id,
             ...randoData,
-            cover,
+            cover: localCover,
+            photos: localPhotos.filter(Boolean),
             // @ts-expect-error todo:check how to handle types correctly from Notion
             title: p.Nom.title[0]?.plain_text || "Untitled",
             // @ts-expect-error todo:check how to handle types correctly from Notion
@@ -76,8 +79,6 @@ export default defineEventHandler(async (event) => {
             dateEnd: p.Date.date.end || undefined,
             // @ts-expect-error todo:check how to handle types correctly from Notion
             type: p.Type.select?.name || undefined,
-            // @ts-expect-error todo:check how to handle types correctly from Notion
-            photos: p.Photos.files.map((f) => f?.file?.url) || undefined,
             // @ts-expect-error todo:check how to handle types correctly from Notion
             mapsLink: p.MapsLink.url || undefined,
             // @ts-expect-error todo:check how to handle types correctly from Notion
