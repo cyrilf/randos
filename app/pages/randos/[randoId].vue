@@ -158,6 +158,7 @@ const activeShowMore = ref("");
             <UAccordion
               v-model="activeShowMore"
               :items="[{ label: activeShowMore === '0' ? 'Voir moins' : 'Voir plus' }]"
+              trailing-icon="i-lucide-chevron-down"
               :ui="{
                 trailingIcon: 'ms-0',
                 body: 'text-base',

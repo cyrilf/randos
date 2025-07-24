@@ -36,7 +36,7 @@ const { myMapsEmbed } = useRuntimeConfig().public;
       </span>
       pour le moment, cool!
     </h1>
-    <div class="mt-16 flex flex-col gap-8 sm:grid sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-16">
+    <div class="mt-10 flex flex-col gap-8 sm:grid sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-16">
       <RandoCard v-for="rando in randos" :key="rando.id" :rando />
     </div>
     <UCard v-if="myMapsEmbed" variant="subtle" class="mt-16 rounded-2xl pb-0">
