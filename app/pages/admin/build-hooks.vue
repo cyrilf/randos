@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import type { FormSubmitEvent } from "@nuxt/ui";
 import type { Toast } from "@nuxt/ui/runtime/composables/useToast.js";
 
 const PROVIDERS = [
@@ -148,8 +147,11 @@ onMounted(async () => {
   }
 });
 
-async function onSubmit(event: FormSubmitEvent<{ githubToken: string; netlifyToken: string }>) {
-  const { githubToken, netlifyToken } = event.data;
+async function onSubmit() {
+  const githubProvider = providers.value.find((p) => p.id === "github")!;
+  const githubToken = githubProvider.token;
+  const netlifyProvider = providers.value.find((p) => p.id === "netlify")!;
+  const netlifyToken = netlifyProvider.token;
   await sendRequests(githubToken, netlifyToken);
 }
 
