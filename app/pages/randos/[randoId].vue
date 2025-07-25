@@ -85,7 +85,6 @@ const activeShowMore = ref("");
               v-slot="{ item }"
               :items="photos"
               wheel-gestures
-              loop
               :ui="{ item: 'basis-1/3', container: 'items-stretch' }"
               class="mt-4"
             >
@@ -101,7 +100,7 @@ const activeShowMore = ref("");
                 height="320"
                 class="h-full w-full rounded-lg object-cover"
               />
-              <div v-else class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-100">
+              <div v-else class="bg-elevated/50 flex h-full w-full items-center justify-center rounded-lg">
                 <u-button
                   color="primary"
                   variant="ghost"
