@@ -14,7 +14,7 @@ export default defineNuxtConfig({
     appBaseUrl: "", // can be overridden by NUXT_APP_BASE_URL environment variable
     public: {
       myMapsEmbedUrl: "", // can be overridden by NUXT_PUBLIC_MY_MAPS_EMBED environment variable,
-      githubWorkflowApiUrl: "", // can be overridden by NUXT_PUBLIC_GITHUB_WORKFLOW_API_ENPOINT environment variable
+      githubWorkflowApiUrl: "", // can be overridden by NUXT_PUBLIC_GITHUB_WORKFLOW_API_URL environment variable
     },
   },
   css: ["~/assets/css/main.css", "vue-3-fullscreen-image-directive-plugin/style.css"],
