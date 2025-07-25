@@ -8,7 +8,7 @@ useSeoMeta({
 </script>
 
 <template>
-  <UApp>
+  <UApp :toaster="{ position: 'top-center' }">
     <AppHeader />
     <NuxtPage />
   </UApp>
