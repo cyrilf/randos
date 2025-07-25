@@ -34,6 +34,7 @@ export default defineNuxtConfig({
     prerender: {
       crawlLinks: true,
       failOnError: false,
+      routes: ["/admin/build-hooks"],
     },
   },
 });
