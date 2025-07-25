@@ -1,9 +1,9 @@
 <script setup lang="ts">
 useSeoMeta({
-  title: "Randos - tes randonnées uniques",
-  ogTitle: "Randos - tes randonnées uniques",
-  description: "Met en valeur tes randonnées",
-  ogDescription: "Met en valeur tes randonnées",
+  title: "Randos - des randonnées inspirantes",
+  ogTitle: "Randos - des randonnées inspirantes",
+  description: "Découvre des randonnées inspirantes",
+  ogDescription: "Découvre des randonnées inspirantes",
 });
 </script>
 
