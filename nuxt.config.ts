@@ -13,7 +13,8 @@ export default defineNuxtConfig({
     notionDatabaseId: "", // can be overridden by NUXT_NOTION_DATABASE_ID environment variable
     appBaseUrl: "", // can be overridden by NUXT_APP_BASE_URL environment variable
     public: {
-      myMapsEmbed: "", // can be overridden by NUXT_PUBLIC_MY_MAPS_EMBED environment variable,
+      myMapsEmbedUrl: "", // can be overridden by NUXT_PUBLIC_MY_MAPS_EMBED environment variable,
+      githubWorkflowApiUrl: "", // can be overridden by NUXT_PUBLIC_GITHUB_WORKFLOW_API_ENPOINT environment variable
     },
   },
   css: ["~/assets/css/main.css", "vue-3-fullscreen-image-directive-plugin/style.css"],

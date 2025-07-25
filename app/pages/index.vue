@@ -4,7 +4,7 @@ const { data } = await useFetch("/api/randos", {
 });
 const randos = data.value?.randos || [];
 
-const { myMapsEmbed } = useRuntimeConfig().public;
+const { myMapsEmbedUrl } = useRuntimeConfig().public;
 </script>
 <template>
   <UContainer class="my-16">
@@ -37,12 +37,12 @@ const { myMapsEmbed } = useRuntimeConfig().public;
       pour le moment, cool!
     </h1>
     <RandoList :randos class="mt-10" />
-    <UCard v-if="myMapsEmbed" variant="subtle" class="mt-16 rounded-2xl pb-0">
+    <UCard v-if="myMapsEmbedUrl" variant="subtle" class="mt-16 rounded-2xl pb-0">
       <h2 class="text-2xl font-bold">Où sont les randos ?</h2>
       <div class="relative mt-4 min-h-60 overflow-hidden rounded-2xl">
         <!-- TODO use a custom map using MapLibre for instance based on the visorando coordinates-->
         <iframe
-          :src="myMapsEmbed"
+          :src="myMapsEmbedUrl"
           width="100%"
           height="300"
           class="absolute -top-16 mx-auto rounded-2xl"

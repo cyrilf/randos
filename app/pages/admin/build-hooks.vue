@@ -17,10 +17,12 @@ const PROVIDERS = [
   },
 ];
 
+const { githubWorkflowApiUrl } = useRuntimeConfig().public;
+
 const API_CONFIG = {
   github: {
     method: "POST" as const,
-    url: "https://api.github.com/repos/cyrilf/randos/actions/workflows/deploy.yml/dispatches",
+    url: githubWorkflowApiUrl,
     headers: {
       Accept: "application/vnd.github+json",
       "X-GitHub-Api-Version": "2022-11-28",
